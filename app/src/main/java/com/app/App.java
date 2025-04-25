@@ -3,12 +3,18 @@
  */
 package com.app;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import com.app.command.FileOrganizerCommand;
+import picocli.CommandLine;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-    }
+/** Main application class for the File Organizer CLI. */
+public class App {
+  /**
+   * Main entry point of the application.
+   *
+   * @param args Command line arguments passed to the application
+   */
+  public static void main(String[] args) {
+    int exitCode = new CommandLine(new FileOrganizerCommand()).execute(args);
+    System.exit(exitCode);
+  }
 }

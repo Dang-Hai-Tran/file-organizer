@@ -1,0 +1,68 @@
+# GitLab CI/CD Configuration for File Organizer
+# This pipeline will build the project and run tests on every push
+
+image: gradle:8.13-jdk21-alpine
+
+# Define stages for this pipeline
+stages:
+  - build
+  - test
+  - quality
+
+# Cache dependencies between jobs
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .gradle/
+    - build/
+    - app/build/
+
+# Variables used across jobs
+variables:
+  # Disable the Gradle daemon for CI/CD
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+# Build job
+build:
+  stage: build
+  script:
+    - echo "Building the project..."
+    - ./gradlew assemble
+  artifacts:
+    paths:
+      - app/build/libs/
+
+# Run unit tests
+test:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - ./gradlew test
+  artifacts:
+    reports:
+      junit: app/build/test-results/test/TEST-*.xml
+    paths:
+      - app/build/reports/tests/
+    when: always
+
+# Code quality check with Spotless
+code_quality:
+  stage: quality
+  script:
+    - echo "Running code style check..."
+    - ./gradlew spotlessCheck
+  allow_failure: true
+  when: always
+
+# Create distribution packages
+package:
+  stage: quality
+  script:
+    - echo "Creating distribution packages..."
+    - ./gradlew distTar distZip
+  artifacts:
+    paths:
+      - app/build/distributions/
+  dependencies:
+    - build
+  when: on_success
