@@ -84,11 +84,11 @@ public class FileOrganizer {
    * @return The extension without the dot, or an empty string if no extension
    */
   public String getFileExtension(String fileName) {
-    int firstDotIndex = fileName.indexOf('.');
-    if (firstDotIndex == -1 || firstDotIndex == 0) {
-      return ""; // No extension or the file starts with a dot (hidden file)
+    int lastDotIndex = fileName.lastIndexOf('.');
+    if (lastDotIndex <= 0 || fileName.startsWith(".")) {
+      return ""; // No extension or hidden file
     }
-    return fileName.substring(firstDotIndex + 1);
+    return fileName.substring(lastDotIndex + 1).toLowerCase(); // Normalize to lowercase
   }
 
   /**
@@ -102,10 +102,11 @@ public class FileOrganizer {
     String baseName;
     String extension;
 
-    int firstDotIndex = fileName.indexOf('.');
-    if (firstDotIndex > 0) {
-      baseName = fileName.substring(0, firstDotIndex);
-      extension = fileName.substring(firstDotIndex);
+    // Use the last dot to split the basename and extension, ensuring this behavior is intentional
+    int lastDotIndex = fileName.lastIndexOf('.');
+    if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
+      baseName = fileName.substring(0, lastDotIndex);
+      extension = fileName.substring(lastDotIndex);
     } else {
       baseName = fileName;
       extension = "";

@@ -27,7 +27,7 @@ public class FileOrganizerTest {
     // Test normal cases
     assertEquals("txt", fileOrganizer.getFileExtension("document.txt"));
     assertEquals("jpg", fileOrganizer.getFileExtension("photo.jpg"));
-    assertEquals("tar.gz", fileOrganizer.getFileExtension("archive.tar.gz"));
+    assertEquals("gz", fileOrganizer.getFileExtension("archive.tar.gz"));
 
     // Test empty extension
     assertEquals("", fileOrganizer.getFileExtension("filename"));
