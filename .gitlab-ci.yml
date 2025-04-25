@@ -38,6 +38,8 @@ test:
   script:
     - echo "Running tests..."
     - ./gradlew test
+    - echo "Running integration tests ..."
+    - ./gradlew integrationTest
   artifacts:
     reports:
       junit: app/build/test-results/test/TEST-*.xml
