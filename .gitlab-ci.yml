@@ -1,7 +1,7 @@
 # GitLab CI/CD Configuration for File Organizer
 # This pipeline will build the project and run tests on every push
 
-image: gradle:8.3-jdk21-alpine
+image: gradle:8.13-jdk21-alpine
 
 # Define stages for this pipeline
 stages:
