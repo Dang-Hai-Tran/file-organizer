@@ -1,6 +1,8 @@
 package com.app.command;
 
+import com.app.service.FileOrganizer;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.Callable;
 import picocli.CommandLine.Command;
@@ -57,10 +59,21 @@ public class FileOrganizerCommand implements Callable<Integer> {
       return 1;
     }
 
-    // TODO: Implement file organization logic by calling the FileOrganizer service
+    // Implement file organization logic by calling the FileOrganizer service
     out.println("Organizing files from: " + sourceDir.getAbsolutePath());
     out.println("Moving to: " + destDir.getAbsolutePath());
 
-    return 0;
+    FileOrganizer organizer = new FileOrganizer();
+    try {
+      int movedFilesCount = organizer.organizeFiles(sourceDir, destDir);
+      out.println("Successfully organized " + movedFilesCount + " files.");
+
+      // If no files were moved, it might be because the directory was empty
+      // or contained only directories, which is still a success condition
+      return 0;
+    } catch (IOException e) {
+      err.println("Error organizing files: " + e.getMessage());
+      return 1;
+    }
   }
 }

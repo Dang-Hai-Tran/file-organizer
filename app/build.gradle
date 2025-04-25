@@ -30,11 +30,60 @@ dependencies {
     annotationProcessor 'info.picocli:picocli-codegen:4.7.5'
 }
 
+// Define source sets for integration tests
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integrationTest/java')
+        }
+        resources.srcDir file('src/integrationTest/resources')
+    }
+}
+
+// Create a specific configuration for integration tests
+configurations {
+    integrationTestImplementation.extendsFrom implementation, testImplementation
+    integrationTestRuntimeOnly.extendsFrom runtimeOnly, testRuntimeOnly
+}
+
+// Add dependencies specifically for integration tests
+dependencies {
+    integrationTestImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
+}
+
+// Create an integration test task
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+
+    useJUnitPlatform()
+
+    // Should run after unit tests
+    shouldRunAfter test
+
+    // Show standard out and standard error of the test JVM(s) on the console
+    testLogging {
+        showStandardStreams = true
+        events "passed", "skipped", "failed"
+    }
+}
+
+// Create a task to run all tests
+tasks.register('allTests') {
+    dependsOn test, integrationTest
+    description = 'Runs all tests (unit and integration)'
+    group = 'verification'
+}
+
+// Configure the built-in test suite
 testing {
     suites {
-        // Configure the built-in test suite
         test {
-            // Use JUnit Jupiter test framework
             useJUnitJupiter('5.11.3')
         }
     }

@@ -52,8 +52,9 @@ public class FileOrganizerCommandTest {
     // Verify command executed successfully
     assertEquals(0, exitCode);
     String output = outputWriter.toString();
-    assertTrue(output.contains("Organizing files from: "));
-    assertTrue(output.contains(sourceDir.getAbsolutePath()));
+    assertTrue(output.contains("Organizing files from: " + sourceDir.getAbsolutePath()));
+    assertTrue(output.contains("Moving to: " + destDir.getAbsolutePath()));
+    assertTrue(output.contains("Successfully organized"));
   }
 
   @Test
@@ -75,8 +76,9 @@ public class FileOrganizerCommandTest {
     // Verify command executed successfully
     assertEquals(0, exitCode);
     String output = outputWriter.toString();
-    assertTrue(output.contains("Organizing files from:"));
-    assertTrue(output.contains(sourceDir.getAbsolutePath()));
+    assertTrue(output.contains("Organizing files from: " + sourceDir.getAbsolutePath()));
+    assertTrue(output.contains("Moving to: " + destDir.getAbsolutePath()));
+    assertTrue(output.contains("Successfully organized"));
   }
 
   @Test
