@@ -3,7 +3,4 @@
 
 # Ignore Gradle build output directory
 build
-
-# Ignore app build and bin directories
-app/build
-app/bin
+bin

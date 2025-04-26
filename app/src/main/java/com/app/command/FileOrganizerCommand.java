@@ -37,7 +37,7 @@ public class FileOrganizerCommand implements Callable<Integer> {
   private File destDir;
 
   @Override
-  public Integer call() throws Exception {
+  public Integer call() {
     // Get the output and error streams
     PrintWriter out = spec.commandLine().getOut();
     PrintWriter err = spec.commandLine().getErr();
