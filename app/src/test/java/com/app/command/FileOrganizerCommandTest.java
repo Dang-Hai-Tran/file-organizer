@@ -1,16 +1,15 @@
 package com.app.command;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import picocli.CommandLine;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.file.Path;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import picocli.CommandLine;
 
 /** Unit tests for {@link FileOrganizerCommand}. */
 public class FileOrganizerCommandTest {
