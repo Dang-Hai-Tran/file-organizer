@@ -15,44 +15,44 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up JDK 21
       uses: actions/setup-java@v3
       with:
         java-version: '21'
         distribution: 'temurin'
-        
+
     - name: Make Gradle wrapper executable
       run: chmod +x ./gradlew
-      
+
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@v1
-      
+
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2
       with:
         arguments: build
-        
+
     - name: Check code formatting
       uses: gradle/gradle-build-action@v2
       with:
         arguments: spotlessCheck
-        
+
     - name: Run tests
       uses: gradle/gradle-build-action@v2
       with:
         arguments: test
-        
+
     - name: Create distributions
       uses: gradle/gradle-build-action@v2
       with:
         arguments: distZip distTar
-        
+
     - name: Create fat JAR
       uses: gradle/gradle-build-action@v2
       with:
         arguments: fatJar
-        
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
