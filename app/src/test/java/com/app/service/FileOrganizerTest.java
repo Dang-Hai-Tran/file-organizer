@@ -1,16 +1,18 @@
 package com.app.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /** Unit tests for {@link FileOrganizer}. */
 public class FileOrganizerTest {
@@ -42,11 +44,11 @@ public class FileOrganizerTest {
 
   @Test
   void testOrganizeFilesEmptyDirectory(@TempDir Path tempDir) throws IOException {
-    // Create empty source directory
+    // Create an empty source directory
     File sourceDir = tempDir.resolve("source").toFile();
     assertTrue(sourceDir.mkdir());
 
-    // Create destination directory
+    // Create a destination directory
     File destDir = tempDir.resolve("destination").toFile();
     assertTrue(destDir.mkdir());
 
@@ -55,16 +57,16 @@ public class FileOrganizerTest {
 
     // Verify no files were moved
     assertEquals(0, count);
-    assertEquals(0, destDir.list().length);
+    assertEquals(0, Objects.requireNonNull(destDir.list()).length);
   }
 
   @Test
   void testOrganizeFilesByExtension(@TempDir Path tempDir) throws IOException {
-    // Create source directory
+    // Create a source directory
     File sourceDir = tempDir.resolve("source").toFile();
     assertTrue(sourceDir.mkdir());
 
-    // Create destination directory
+    // Create a destination directory
     File destDir = tempDir.resolve("destination").toFile();
     assertTrue(destDir.mkdir());
 
@@ -94,17 +96,17 @@ public class FileOrganizerTest {
     assertTrue(new File(destDir, "zip/archive.zip").exists());
     assertTrue(new File(destDir, "no_extension/noextension").exists());
 
-    // Source directory should be empty (except for any hidden files)
+    // The source directory should be empty (except for any hidden files)
     assertEquals(0, countVisibleFiles(sourceDir));
   }
 
   @Test
   void testOrganizeFilesWithNameConflicts(@TempDir Path tempDir) throws IOException {
-    // Create source directory
+    // Create a source directory
     File sourceDir = tempDir.resolve("source").toFile();
     assertTrue(sourceDir.mkdir());
 
-    // Create destination directory
+    // Create a destination directory
     File destDir = tempDir.resolve("destination").toFile();
     assertTrue(destDir.mkdir());
 
@@ -138,11 +140,11 @@ public class FileOrganizerTest {
   @Test
   void testOrganizeFilesPreservesAttributes(@TempDir Path tempDir)
       throws IOException, InterruptedException {
-    // Create source directory
+    // Create a source directory
     File sourceDir = tempDir.resolve("source").toFile();
     assertTrue(sourceDir.mkdir());
 
-    // Create destination directory
+    // Create a destination directory
     File destDir = tempDir.resolve("destination").toFile();
     assertTrue(destDir.mkdir());
 
@@ -216,7 +218,7 @@ public class FileOrganizerTest {
     // Create a normal file
     createTestFile(sourceDir, "visible.txt", "visible content");
 
-    // Create destination directory
+    // Create a destination directory
     File destDir = tempDir.resolve("destination").toFile();
     assertTrue(destDir.mkdir());
 

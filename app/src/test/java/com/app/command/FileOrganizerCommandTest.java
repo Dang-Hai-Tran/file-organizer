@@ -1,17 +1,16 @@
 package com.app.command;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import picocli.CommandLine;
 
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.file.Path;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import picocli.CommandLine;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /** Unit tests for {@link FileOrganizerCommand}. */
 public class FileOrganizerCommandTest {
@@ -35,15 +34,16 @@ public class FileOrganizerCommandTest {
 
   @Test
   void testCommandWithRequiredOptions(@TempDir Path tempDir) {
-    // Create source directory with files
+    // Create a source directory with files
     File sourceDir = tempDir.resolve("source").toFile();
     assertTrue(sourceDir.mkdir());
 
-    // Create destination directory
+    // Create a destination directory
     File destDir = tempDir.resolve("dest").toFile();
     assertTrue(destDir.mkdir());
 
-    // Execute command
+    // Execute command with required options
+
     int exitCode =
         commandLine.execute(
             "--source", sourceDir.getAbsolutePath(),
@@ -59,11 +59,11 @@ public class FileOrganizerCommandTest {
 
   @Test
   void testCommandWithShortOptions(@TempDir Path tempDir) {
-    // Create source directory with files
+    // Create a source directory with files
     File sourceDir = tempDir.resolve("source").toFile();
     assertTrue(sourceDir.mkdir());
 
-    // Create destination directory
+    // Create a destination directory
     File destDir = tempDir.resolve("dest").toFile();
     assertTrue(destDir.mkdir());
 
@@ -86,7 +86,7 @@ public class FileOrganizerCommandTest {
     // Create a non-existent source directory path
     File sourceDir = tempDir.resolve("non-existent").toFile();
 
-    // Create destination directory
+    // Create a destination directory
     File destDir = tempDir.resolve("dest").toFile();
     assertTrue(destDir.mkdir());
 
@@ -96,7 +96,7 @@ public class FileOrganizerCommandTest {
             "--source", sourceDir.getAbsolutePath(),
             "--dest", destDir.getAbsolutePath());
 
-    // Verify command failed with appropriate error
+    // Verify command failed with the appropriate error
     assertEquals(1, exitCode);
     String error = errorWriter.toString();
     assertTrue(error.contains("Error: Source directory does not exist"));
@@ -104,11 +104,11 @@ public class FileOrganizerCommandTest {
 
   @Test
   void testFileAsSourceDirectory(@TempDir Path tempDir) throws Exception {
-    // Create a file instead of a directory for source
+    // Create a file instead of a directory for the source
     File sourceFile = tempDir.resolve("sourcefile.txt").toFile();
     assertTrue(sourceFile.createNewFile());
 
-    // Create destination directory
+    // Create a destination directory
     File destDir = tempDir.resolve("dest").toFile();
     assertTrue(destDir.mkdir());
 
@@ -118,7 +118,7 @@ public class FileOrganizerCommandTest {
             "--source", sourceFile.getAbsolutePath(),
             "--dest", destDir.getAbsolutePath());
 
-    // Verify command failed with appropriate error
+    // Verify command failed with the appropriate error
     assertEquals(1, exitCode);
     String error = errorWriter.toString();
     assertTrue(error.contains("Error: Source directory does not exist or is not a directory"));
