@@ -23,7 +23,7 @@ File Organizer CLI helps you tidy up directories by automatically moving files i
 
 2. Build `file-organizer.jar` yourself:
    ```bash
-   git clone https://gitlab.com/datran4/file-organizer
+   git clone git@github.com:Dang-Hai-Tran/file-organizer.git
    cd file-organizer
    ./gradlew fatJar
    ```
@@ -85,7 +85,7 @@ java -jar file-organizer.jar --help
 
 1. Clone the repository:
    ```bash
-   git clone https://gitlab.com/datran4/file-organizer.git
+   git clone git@github.com:Dang-Hai-Tran/file-organizer.git
    cd file-organizer
    ```
 
