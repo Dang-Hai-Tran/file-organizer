@@ -131,6 +131,7 @@ tasks.register('fatJar', Jar) {
 spotless {
     java {
         // Use the Google Java format
-        googleJavaFormat()
+        eclipse()
+        indentWithSpaces(4)
     }
 }

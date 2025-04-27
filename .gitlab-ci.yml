@@ -27,7 +27,7 @@ build:
   stage: build
   script:
     - echo "Building the project..."
-    - ./gradlew assemble
+    - make build
   artifacts:
     paths:
       - app/build/libs/
@@ -37,9 +37,9 @@ test:
   stage: test
   script:
     - echo "Running tests..."
-    - ./gradlew test
+    - make test
     - echo "Running integration tests ..."
-    - ./gradlew integrationTest
+    - make integrationTest
   artifacts:
     reports:
       junit: app/build/test-results/test/TEST-*.xml
@@ -61,7 +61,7 @@ package:
   stage: quality
   script:
     - echo "Creating distribution packages..."
-    - ./gradlew distTar distZip
+    - make dist
   artifacts:
     paths:
       - app/build/distributions/
